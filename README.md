@@ -70,5 +70,14 @@ actions改成**基於前一點可能可以到終點**，因此一開始node和ac
 ### BFS的圖
 ![](https://github.com/alianlbj23/AiProjectInClass/blob/main/bfs%E6%98%AF%E6%84%8F%E5%9C%96.png?raw=true)
 
+## uniformCostSearch
+### 概念
+用PriorityQueue的優先權設定將優先項目先抓出來，使用內附的priorityQueue的資料結構可以知道作者適用heap製作，裡面的pop()只會抓裡面最小的出來。
+變數裡面多加了cost，因為pop()不會回傳cost，因此多一個cost紀錄。
+(基本上跟上面的BFS寫法差不多，只是差在改用priorityqueue，不用怕說problem.isGoalState那邊會先找到非optimal的終點，因為priorityqueue的特性，會讓這個非optimal的ans因優先權問題一直卡在queue裡面)
+
+## aStarSearch
+### 概念
+用作者裡面給的heuristic計算當前的node到goal的距離，但一開始要記錄**目前累積的cost和到終點的距離**，第一步結束之後，終點距離才開始加累加的cost。
 ## 程式碼參考網址
 [DFS、BFS觀念程式碼參考](https://github.com/jeknov/aiAlgorithmsWithPacman/blob/master/01.Search_BFS.DFS.UCS.Astar/search.py)
