@@ -205,6 +205,18 @@ def breadthFirstSearch(problem: SearchProblem):
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    pqueue = util.PriorityQueue()
+    pqueue.push( (problem.getStartState(), [], 0), 0)
+    visited = []
+    while not pqueue.isEmpty():
+        node, actions, point = pqueue.pop() #point是用來記錄當下這點的cost，因為pop不會回傳cost，要自行做一個變數紀錄
+        if node not in visited:
+            visited.append(node)
+            if problem.isGoalState(node):
+                return actions
+            for child, move, cost in problem.getSuccessors(node):
+                pqueue.push((child, actions+[move], point+cost), point+cost)
+    return []
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
@@ -217,6 +229,20 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
+    pqueue = util.PriorityQueue()
+    pqueue.push( (problem.getStartState(), [], 0), heuristic(problem.getStartState(), problem))
+    visited = []
+    while not pqueue.isEmpty():
+        node, actions, point = pqueue.pop()
+        if node not in visited:
+            visited.append(node)
+
+            if problem.isGoalState(node):
+                return actions
+
+            for child, move, cost in problem.getSuccessors(node):
+                pqueue.push((child, actions+[move], point+cost),  point+cost+heuristic(child, problem))
+    return []
     util.raiseNotDefined()
 
 
